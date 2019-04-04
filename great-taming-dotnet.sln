@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.168
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "great-taming-dotnet", "great-taming-dotnet\great-taming-dotnet.csproj", "{6CF00EA1-CD0C-4893-9BA2-EDECE04832CB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6CF00EA1-CD0C-4893-9BA2-EDECE04832CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CF00EA1-CD0C-4893-9BA2-EDECE04832CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CF00EA1-CD0C-4893-9BA2-EDECE04832CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CF00EA1-CD0C-4893-9BA2-EDECE04832CB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9FCA7581-3C32-4327-AED2-A77F0FC182D0}
+	EndGlobalSection
+EndGlobal
