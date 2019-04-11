@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GreatTaming.Entity;
 
 namespace GreatTaming.Engine
 {
     interface ICommand
     {
-        void Execute();
+        CommandResult Execute(IEntity entity);
     }
 }
