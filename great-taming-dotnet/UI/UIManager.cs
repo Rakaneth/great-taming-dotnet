@@ -34,5 +34,15 @@ namespace GreatTaming.UI
                 screens[ui.Name] = ui;
             }
         }
+
+        public static void Unregister(UI ui)
+        {
+            screens.Remove(ui.Name);
+        }
+
+        public static void Unregister(string uiName)
+        {
+            screens.Remove(uiName);
+        }
     }
 }

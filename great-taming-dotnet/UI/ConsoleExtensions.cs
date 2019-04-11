@@ -28,8 +28,7 @@ namespace GreatTaming.UI
             cons.DrawBox(
                 new Rectangle(0, 0, cons.Width, cons.Height), 
                 new Cell(cons.DefaultForeground, cons.DefaultBackground), 
-                null, 
-                CellSurface.ConnectedLineThin);
+                connectedLineStyle: CellSurface.ConnectedLineThick);
             if (caption != null)
             {
                 var cx = (cons.Width - caption.Length) / 2;
