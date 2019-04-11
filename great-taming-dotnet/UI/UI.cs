@@ -29,17 +29,5 @@ namespace GreatTaming.UI
         {
             System.Console.WriteLine($"Exited {Name} screen.");
         }
-
-        protected string decorate(string text, string fg, string bg="default")
-        {
-            return $"[c:r f:{fg}][c:r b:{bg}]{text}[c:undo][c:undo]";
-        }
-
-        protected void writeCenter(Console cons, int y, string text, string fg="default", string bg="default")
-        {
-            var x = (cons.Width - text.Length) / 2;
-            cons.Cursor.Position = new Point(x, y);
-            cons.Cursor.Print(decorate(text, fg, bg));
-        }
     }
 }

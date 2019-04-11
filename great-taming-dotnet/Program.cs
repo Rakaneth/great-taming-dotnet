@@ -25,7 +25,10 @@ namespace GreatTaming
 
         static void Update(GameTime t)
         {
-            UIManager.CurrentUI.Handle();
+            if (SadConsole.Global.KeyboardState.KeysPressed.Count > 0)
+            {
+                UIManager.CurrentUI.Handle();
+            }
         }
     }
 }

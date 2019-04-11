@@ -25,9 +25,10 @@ namespace GreatTaming.UI
 
         protected override void init()
         {
-            writeCenter(title, 20, "Chroncles of Salaban: The Great Taming", "yellow");
-            writeCenter(title, 21, "by Rakaneth");
-            writeCenter(title, 21, "Press any key to continue");
+            title.Border("Welcome to the Great Taming");
+            title.WriteCenter(20, "Chroncles of Salaban: The Great Taming", "yellow");
+            title.WriteCenter(21, "by Rakaneth");
+            title.WriteCenter(23, "Press any key to continue");
             Children.Add(title);
         }
     }
