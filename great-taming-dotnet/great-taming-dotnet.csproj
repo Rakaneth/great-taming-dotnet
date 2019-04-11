@@ -68,9 +68,12 @@
   <ItemGroup>
     <Compile Include="Engine\Command.cs" />
     <Compile Include="Engine\CommandResult.cs" />
+    <Compile Include="Engine\GameContext.cs" />
     <Compile Include="Engine\UICommand.cs" />
-    <Compile Include="Entity\IEntity.cs" />
+    <Compile Include="Entity\GameEntity.cs" />
+    <Compile Include="Entity\Terrain.cs" />
     <Compile Include="UI\ConsoleExtensions.cs" />
+    <Compile Include="UI\PlayScreen.cs" />
     <Compile Include="UI\TitleScreen.cs" />
     <Compile Include="UI\UI.cs" />
     <Compile Include="Program.cs" />
