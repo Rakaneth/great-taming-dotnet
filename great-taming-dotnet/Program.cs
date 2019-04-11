@@ -2,6 +2,7 @@
 using SadConsole;
 using Microsoft.Xna.Framework;
 using Console = SadConsole.Console;
+using GreatTaming.UI;
 
 namespace GreatTaming
 {
@@ -11,17 +12,20 @@ namespace GreatTaming
         {
             SadConsole.Game.Create(100, 40);
             SadConsole.Game.OnInitialize = Init;
+            SadConsole.Game.OnUpdate = Update;
             SadConsole.Game.Instance.Run();
             SadConsole.Game.Instance.Dispose();
         }
 
         static void Init()
         {
-            var console = new Console(100, 40);
-            console.FillWithRandomGarbage();
-            console.Fill(new Rectangle(3, 3, 23, 3), Color.Violet, Color.Black, 0, 0);
-            console.Print(4, 4, "Hello, SadConsole!");
-            SadConsole.Global.CurrentScreen = console;
+            UIManager.Register(new TitleScreen());
+            UIManager.SetUI("title");
+        }
+
+        static void Update(GameTime t)
+        {
+            UIManager.CurrentUI.Handle();
         }
     }
 }
