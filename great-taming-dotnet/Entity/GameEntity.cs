@@ -47,9 +47,12 @@ namespace GreatTaming.Entity
 
         public GameEntity(GameEntityBuilder opts) : base(opts.fg, opts.bg, opts.glyph)
         {
-            _go = new GameObject(opts.pos, opts.layer, this, opts.isStatic, opts.isWalkable, opts.isTransparent);
+            //TODO: MAJOR REWORK: use base GameObjects and give them components like a sane person
+            _go = new GameObject(opts.pos, opts.layer, null, opts.isStatic, opts.isWalkable, opts.isTransparent);
             Name = opts.name;
             Desc = opts.desc;
+            Position = opts.pos;
+            Components.Add(new SadConsole.Components.EntityViewSyncComponent());
         }
 
         public Map CurrentMap => _go.CurrentMap;
@@ -63,7 +66,13 @@ namespace GreatTaming.Entity
 
         public int Layer => _go.Layer;
 
-        Coord IGameObject.Position { get => _go.Position; set => _go.Position = value; }
+        Coord IGameObject.Position {
+            get => _go.Position;
+            set {
+                _go.Position = value;
+                Position = value;
+            }
+        }
 
         event EventHandler<ItemMovedEventArgs<IGameObject>> IGameObject.Moved
         {

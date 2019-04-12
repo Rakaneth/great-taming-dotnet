@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using GoRogue.GameFramework;
 using Troschuetz.Random;
 using Troschuetz.Random.Generators;
+using GoRogue.MapViews;
 using GreatTaming.Entity;
+using GreatTaming.Mapping;
 
 namespace GreatTaming.Engine
 {
@@ -18,14 +20,17 @@ namespace GreatTaming.Engine
         public IGenerator RNG { get; }
         public GameEntity Player { get; private set; }
 
-        public GameContext(uint seed)
+        public GameContext(uint? seed=null)
         {
-            RNG = new XorShift128Generator(seed);
-        }
-
-        public GameContext()
-        {
-            RNG = new XorShift128Generator();
+            if (seed == null)
+            {
+                RNG = new XorShift128Generator();
+            }
+            else
+            {
+                RNG = new XorShift128Generator(seed.Value);
+            }
+            
         }
 
         public void RegisterMap(string id, Map map)
@@ -47,6 +52,23 @@ namespace GreatTaming.Engine
         {
             CurMapID = mapID;
             //TODO: scheduler stuff
+        }
+
+        public bool changeMap(GameEntity e, string mapID)
+        {
+            var m = maps[mapID];
+            return m.AddEntity(e);
+        }
+
+        public static GameContext NewGame(uint? seed)
+        {
+            var ctx = new GameContext(seed);
+            var m = MapBuilder.Build(85, 85, "mines", ctx, MapType.DUNGEON);
+            var randPos = m.Terrain.RandomPosition((c, t) => t.IsWalkable,  ctx.RNG);
+            ctx.Player = Mobile.TestPlayer(randPos);
+            ctx.SetCurMap("mines");
+            ctx.changeMap(ctx.Player, "mines");
+            return ctx;
         }
     }
 }

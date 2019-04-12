@@ -3,6 +3,7 @@ using SadConsole;
 using Microsoft.Xna.Framework;
 using Console = SadConsole.Console;
 using GreatTaming.UI;
+using GreatTaming.Engine;
 
 namespace GreatTaming
 {
@@ -19,7 +20,10 @@ namespace GreatTaming
 
         static void Init()
         {
-            UIManager.Register(new TitleScreen());
+            var ctx = GameContext.NewGame(0xDEADBEEF);
+            UIManager.Register(
+                new TitleScreen(),
+                new MainScreen(ctx));
             UIManager.SetUI("title");
         }
 

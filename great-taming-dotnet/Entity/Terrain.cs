@@ -12,7 +12,7 @@ namespace GreatTaming.Entity
     {
         public TerrainOpts(Coord pos, string name, string desc, int glyph, Color? fg=null, Color? bg=null, bool canWalk = true, bool canSee = true)
         {
-            this.fg = fg ?? Color.White;
+            this.fg = fg ?? Color.Transparent;
             this.bg = bg ?? Color.Transparent;
             this.name = name;
             this.desc = desc;
@@ -64,9 +64,33 @@ namespace GreatTaming.Entity
                 "A wooden wall",
                 ' ',
                 null,
-                new Color(191, 127, 101),
+                Color.DarkGoldenrod,
                 false, 
                 false);
+            return new Terrain(opts);
+        }
+
+        public static Terrain WoodFloor(Coord pos)
+        {
+            var opts = new TerrainOpts(
+                pos,
+                "Wooden floor",
+                "A wooden floor",
+                ' ',
+                null,
+                Color.Goldenrod);
+            return new Terrain(opts);
+        }
+
+        public static Terrain ClosedDoor(Coord pos)
+        {
+            var opts = new TerrainOpts(
+                pos,
+                "Closed door",
+                "A closed door",
+                '+',
+                Color.White,
+                Color.Sienna);
             return new Terrain(opts);
         }
     }

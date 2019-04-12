@@ -18,8 +18,7 @@ namespace GreatTaming.UI
 
         public override ICommand Handle()
         {
-            var justPressed = SadConsole.Global.KeyboardState.KeysPressed.FirstOrDefault();
-            System.Console.WriteLine($"Key {justPressed.Key} pressed.");
+            UIManager.SetUI("main");
             return new UICommand();
         }
 

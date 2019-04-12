@@ -71,7 +71,10 @@
     <Compile Include="Engine\GameContext.cs" />
     <Compile Include="Engine\UICommand.cs" />
     <Compile Include="Entity\GameEntity.cs" />
+    <Compile Include="Entity\Mobile.cs" />
     <Compile Include="Entity\Terrain.cs" />
+    <Compile Include="Mapping\MapBuilder.cs" />
+    <Compile Include="Mapping\MapTranslators.cs" />
     <Compile Include="UI\ConsoleExtensions.cs" />
     <Compile Include="UI\PlayScreen.cs" />
     <Compile Include="UI\TitleScreen.cs" />
