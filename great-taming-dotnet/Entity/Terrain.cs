@@ -26,24 +26,20 @@ namespace GreatTaming.Entity {
             this.glyph = glyph;
         }
 
-        public static Terrain StoneFloor(Coord pos) {
-            return new Terrain("Stone floor", ' ', pos, background: Color.LightGray);
+        public static Terrain Floor(Coord pos, Color floorColor) {
+            return new Terrain("Stone floor", ' ', pos, background: floorColor);
         }
 
-        public static Terrain StoneWall(Coord pos) {
-            return new Terrain("Stone wall", ' ', pos, background: Color.Gray, isWalkable: false, isVisible: false);
-        }
-
-        public static Terrain WoodWall(Coord pos) {
-            return new Terrain("Wood wall", ' ', pos, background: Color.DarkGoldenrod, isWalkable: false, isVisible: false);
-        }
-
-        public static Terrain WoodFloor(Coord pos) {
-            return new Terrain("Wood floor", ' ', pos, background: Color.Goldenrod);
+        public static Terrain Wall(Coord pos, Color wallColor) {
+            return new Terrain("Stone wall", ' ', pos, background: wallColor, isWalkable: false, isVisible: false);
         }
 
         public static Terrain ClosedDoor(Coord pos) {
             return new Terrain("Closed door", '+', pos, foreground: Color.White, background: Color.Sienna);
+        }
+
+        public static Terrain OpenDoor(Coord pos) {
+            return new Terrain("Open door", '/', pos, foreground: Color.White, background: Color.Sienna);
         }
     }
 }
