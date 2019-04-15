@@ -6,24 +6,24 @@ using System.Threading.Tasks;
 using GoRogue;
 using Microsoft.Xna.Framework;
 using GoRogue.GameFramework;
-using SadConsole.Components;
+using SadConsole;
+
 
 namespace GreatTaming.Entity {
     class Terrain : GameObject {
-        public SadConsole.Entities.Entity DrawEntity {
-            get; private set;
-        }
 
+        private Color fg;
+        private Color bg;
+        private int glyph;
         public string Name { get; }
+        public Cell DrawCell => new Cell(fg, bg, glyph);
 
         private Terrain(string name, int glyph, Coord pos, Color? foreground = null, Color? background = null, bool isWalkable = true, bool isVisible = true)
             : base(pos, 0, null, true, isWalkable, isVisible) {
             Name = name;
-            Color fg = foreground ?? Color.Transparent;
-            Color bg = background ?? Color.Transparent;
-            DrawEntity = new SadConsole.Entities.Entity(fg, bg, glyph);
-            DrawEntity.Position = pos;
-            DrawEntity.Components.Add(new EntityViewSyncComponent());
+            fg = foreground ?? Color.Transparent;
+            bg = background ?? Color.Transparent;
+            this.glyph = glyph;
         }
 
         public static Terrain StoneFloor(Coord pos) {

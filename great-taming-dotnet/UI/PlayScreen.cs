@@ -9,6 +9,7 @@ using SadConsole;
 using SadConsole.Entities;
 using Console = SadConsole.Console;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using GoRogue.GameFramework;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 using GoRogue;
@@ -35,24 +36,62 @@ namespace GreatTaming.UI {
         public MainScreen(GameContext context) : base("main") {
             this.context = context;
             loadMap();
-            mapCons.CenterViewPortOnPoint(context.Player.Position);
+            CenterOnObject(context.Player);
         }
         public override ICommand Handle() {
-            var justPressed = SadConsole.Global.KeyboardState.KeysPressed.FirstOrDefault();
-            System.Console.WriteLine($"Key {justPressed.Key} pressed.");
+            
+            Direction d;
+            var curKey = SadConsole.Global.KeyboardState.KeysPressed.FirstOrDefault();
+
+            switch (curKey.Key) {
+                case Keys.NumPad8:
+                    d = Direction.UP;
+                    break;
+                case Keys.NumPad9:
+                    d = Direction.UP_RIGHT;
+                    break;
+                case Keys.NumPad6:
+                    d = Direction.RIGHT;
+                    break;
+                case Keys.NumPad3:
+                    d = Direction.DOWN_RIGHT;
+                    break;
+                case Keys.NumPad2:
+                    d = Direction.DOWN;
+                    break;
+                case Keys.NumPad1:
+                    d = Direction.DOWN_LEFT;
+                    break;
+                case Keys.NumPad4:
+                    d = Direction.LEFT;
+                    break;
+                case Keys.NumPad7:
+                    d = Direction.UP_LEFT;
+                    break;
+                default:
+                    d = Direction.NONE;
+                    break;
+            }
+            context.Player.Position = context.Player.Position.Translate(d.DeltaX, d.DeltaY);
+            CenterOnObject(context.Player);
             return new UICommand();
+        }
+
+        private void CenterOnObject(Mobile m) {
+            mapCons.CenterViewPortOnPoint(m.Position);
         }
 
 
         private void loadMap() {
             var m = context.CurMap;
             mapCons.Children.Clear();
-            for (int x = 0; x<m.Width; x++) {
-                for (int y=0; y<m.Height; y++) {
-                    var terrain = m.Terrain[x, y] as Terrain;
-                    mapCons.Children.Add(terrain.DrawEntity);
+            mapCons.Clear();
+            for (int x = 0; x < m.Width; x++) {
+                for (int y = 0; y < m.Height; y++) {
+                    var t = m.Terrain[x, y] as Terrain;
+                    mapCons.SetCellAppearance(x, y, t.DrawCell);
                 }
-            }
+            }                                               
             foreach (var thing in m.Entities.Items.OfType<Mobile>()) {
                 mapCons.Children.Add(thing.DrawEntity);
             }
