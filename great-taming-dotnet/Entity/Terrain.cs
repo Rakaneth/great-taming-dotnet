@@ -5,93 +5,45 @@ using System.Text;
 using System.Threading.Tasks;
 using GoRogue;
 using Microsoft.Xna.Framework;
+using GoRogue.GameFramework;
+using SadConsole.Components;
 
-namespace GreatTaming.Entity
-{
-    public class TerrainOpts: GameEntityBuilder
-    {
-        public TerrainOpts(Coord pos, string name, string desc, int glyph, Color? fg=null, Color? bg=null, bool canWalk = true, bool canSee = true)
-        {
-            this.fg = fg ?? Color.Transparent;
-            this.bg = bg ?? Color.Transparent;
-            this.name = name;
-            this.desc = desc;
-            this.glyph = glyph;
-            isWalkable = canWalk;
-            isTransparent = canSee;
-            isStatic = true;
-            this.pos = pos;
-        }
-    }
-
-    class Terrain: GameEntity
-    {
-        private Terrain(TerrainOpts opts): base(opts)
-        {
+namespace GreatTaming.Entity {
+    class Terrain : GameObject {
+        public SadConsole.Entities.Entity DrawEntity {
+            get; private set;
         }
 
-        public static Terrain StoneFloor(Coord pos)
-        {
-            var stoneOpts = new TerrainOpts(
-                pos, 
-                "Stone floor",
-                "A stone floor",
-                ' ',
-                null,
-                Color.LightGray);
-            return new Terrain(stoneOpts);
+        public string Name { get; }
+
+        private Terrain(string name, int glyph, Coord pos, Color? foreground = null, Color? background = null, bool isWalkable = true, bool isVisible = true)
+            : base(pos, 0, null, true, isWalkable, isVisible) {
+            Name = name;
+            Color fg = foreground ?? Color.Transparent;
+            Color bg = background ?? Color.Transparent;
+            DrawEntity = new SadConsole.Entities.Entity(fg, bg, glyph);
+            DrawEntity.Position = pos;
+            DrawEntity.Components.Add(new EntityViewSyncComponent());
         }
 
-        public static Terrain StoneWall(Coord pos)
-        {
-            var opts = new TerrainOpts(
-                pos,
-                "Stone wall",
-                "A stone wall",
-                ' ',
-                null,
-                Color.Gray,
-                false,
-                false);
-            return new Terrain(opts);
+        public static Terrain StoneFloor(Coord pos) {
+            return new Terrain("Stone floor", ' ', pos, background: Color.LightGray);
         }
 
-        public static Terrain WoodWall(Coord pos)
-        {
-            var opts = new TerrainOpts(
-                pos,
-                "Wooden wall",
-                "A wooden wall",
-                ' ',
-                null,
-                Color.DarkGoldenrod,
-                false, 
-                false);
-            return new Terrain(opts);
+        public static Terrain StoneWall(Coord pos) {
+            return new Terrain("Stone wall", ' ', pos, background: Color.Gray, isWalkable: false, isVisible: false);
         }
 
-        public static Terrain WoodFloor(Coord pos)
-        {
-            var opts = new TerrainOpts(
-                pos,
-                "Wooden floor",
-                "A wooden floor",
-                ' ',
-                null,
-                Color.Goldenrod);
-            return new Terrain(opts);
+        public static Terrain WoodWall(Coord pos) {
+            return new Terrain("Wood wall", ' ', pos, background: Color.DarkGoldenrod, isWalkable: false, isVisible: false);
         }
 
-        public static Terrain ClosedDoor(Coord pos)
-        {
-            var opts = new TerrainOpts(
-                pos,
-                "Closed door",
-                "A closed door",
-                '+',
-                Color.White,
-                Color.Sienna);
-            return new Terrain(opts);
+        public static Terrain WoodFloor(Coord pos) {
+            return new Terrain("Wood floor", ' ', pos, background: Color.Goldenrod);
+        }
+
+        public static Terrain ClosedDoor(Coord pos) {
+            return new Terrain("Closed door", '+', pos, foreground: Color.White, background: Color.Sienna);
         }
     }
 }

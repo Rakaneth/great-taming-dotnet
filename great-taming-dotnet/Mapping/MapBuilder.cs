@@ -44,11 +44,10 @@ namespace GreatTaming.Mapping
                     break;
             }
             var trans = new TerrainTranslator(baseMap);
-            var fullMap = Map.CreateMap(trans, 4, Distance.CHEBYSHEV);
-            foreach (var newDoor in doors)
-            {
-                fullMap.SetTerrain(Terrain.ClosedDoor(newDoor));
+            foreach (var newDoor in doors) {
+                trans[newDoor] = Terrain.ClosedDoor(newDoor);
             }
+            var fullMap = Map.CreateMap(trans, 4, Distance.CHEBYSHEV);
             context.RegisterMap(id, fullMap);
             return fullMap;
         }

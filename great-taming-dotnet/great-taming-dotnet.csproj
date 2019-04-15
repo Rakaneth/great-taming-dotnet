@@ -70,7 +70,7 @@
     <Compile Include="Engine\CommandResult.cs" />
     <Compile Include="Engine\GameContext.cs" />
     <Compile Include="Engine\UICommand.cs" />
-    <Compile Include="Entity\GameEntity.cs" />
+    <Compile Include="Entity\Components.cs" />
     <Compile Include="Entity\Mobile.cs" />
     <Compile Include="Entity\Terrain.cs" />
     <Compile Include="Mapping\MapBuilder.cs" />

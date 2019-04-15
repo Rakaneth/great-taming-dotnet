@@ -18,7 +18,7 @@ namespace GreatTaming.Engine
         public string CurMapID { get; private set; }
         public Map CurMap => maps[CurMapID];
         public IGenerator RNG { get; }
-        public GameEntity Player { get; private set; }
+        public Mobile Player { get; private set; }
 
         public GameContext(uint? seed=null)
         {
@@ -43,9 +43,10 @@ namespace GreatTaming.Engine
             maps.Remove(id);
         }
 
-        public void SetPlayer(GameEntity player)
+        public void SetPlayer(Mobile player)
         {
             Player = player;
+            Player.SetPlayer();
         }
 
         public void SetCurMap(string mapID)
@@ -54,7 +55,7 @@ namespace GreatTaming.Engine
             //TODO: scheduler stuff
         }
 
-        public bool changeMap(GameEntity e, string mapID)
+        public bool changeMap(Mobile e, string mapID)
         {
             var m = maps[mapID];
             return m.AddEntity(e);

@@ -9,6 +9,6 @@ namespace GreatTaming.Engine
 {
     interface ICommand
     {
-        CommandResult Execute(GameEntity entity);
+        CommandResult Execute(Mobile entity);
     }
 }

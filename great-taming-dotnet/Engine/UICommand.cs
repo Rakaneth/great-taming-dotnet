@@ -9,7 +9,7 @@ namespace GreatTaming.Engine
 {
     class UICommand : ICommand
     {
-        public CommandResult Execute(GameEntity entity)
+        public CommandResult Execute(Mobile entity)
         {
             return new CommandResult(cost: 0);
         }

@@ -4,35 +4,45 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GoRogue;
+using GoRogue.GameFramework;
 using Microsoft.Xna.Framework;
+using SadConsole.Components;
 
-namespace GreatTaming.Entity
-{
-    class MobileOpts: GameEntityBuilder
-    {
-        public MobileOpts(Coord pos, string name, string desc, int glyph, Color? fg=null, Color? bg = null)
-        {
-            this.fg = fg ?? Color.White;
-            this.bg = bg ?? Color.Transparent;
-            this.name = name;
-            this.desc = desc;
-            this.glyph = glyph;
-            isWalkable = true;
-            isTransparent = true;
-            isStatic = false;
-            this.pos = pos;
-            this.layer = 3;
+
+namespace GreatTaming.Entity {
+
+    public class Mobile : GameObject {
+        public string Name { get; }
+        public string Desc { get; }
+        public bool IsPlayer { get; private set; }
+        public SadConsole.Entities.Entity DrawEntity { get; private set; }
+        private Mobile(string name, string desc, int glyph, Coord? pos = null, Color? foreground = null, Color? background = null, int layer = 3)
+            : base(pos ?? (0, 0), layer, null, isWalkable: true, isTransparent: true) {
+            var fg = foreground ?? Color.White;
+            var bg = background ?? Color.Transparent;
+            DrawEntity = new SadConsole.Entities.Entity(fg, bg, glyph);
+            DrawEntity.Position = pos ?? (0, 0);
+            DrawEntity.Components.Add(new EntityViewSyncComponent());
+            Name = name;
+            Desc = desc;
+            Moved += Mobile_Moved;
+            IsPlayer = false;
         }
-    }
 
-    class Mobile: GameEntity
-    {
-        Mobile(MobileOpts opts) : base(opts) { }
+        private void Mobile_Moved(object sender, ItemMovedEventArgs<IGameObject> e) {
+            DrawEntity.Position = e.NewPosition;
+        }
 
-        public static Mobile TestPlayer(Coord pos)
-        {
-            var opts = new MobileOpts(pos, "Player", "The player!", '@', Color.Yellow);
-            return new Mobile(opts);
+        public void SetPlayer() {
+            IsPlayer = true;
+        }
+
+        public void UnsetPlayer() {
+            IsPlayer = false;
+        }
+
+        public static Mobile TestPlayer(Coord pos) {
+            return new Mobile("Player", "A test subject", '@', layer: 4);
         }
     }
 }
