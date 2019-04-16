@@ -10,7 +10,7 @@ using SadConsole;
 
 
 namespace GreatTaming.Entity {
-    class Terrain : GameObject {
+    public class Terrain : GameObject {
 
         private Color fg;
         private Color bg;
@@ -27,11 +27,11 @@ namespace GreatTaming.Entity {
         }
 
         public static Terrain Floor(Coord pos, Color floorColor) {
-            return new Terrain("Stone floor", ' ', pos, background: floorColor);
+            return new Terrain("Floor", ' ', pos, background: floorColor);
         }
 
         public static Terrain Wall(Coord pos, Color wallColor) {
-            return new Terrain("Stone wall", ' ', pos, background: wallColor, isWalkable: false, isVisible: false);
+            return new Terrain("Wall", ' ', pos, background: wallColor, isWalkable: false, isVisible: false);
         }
 
         public static Terrain ClosedDoor(Coord pos) {
@@ -40,6 +40,18 @@ namespace GreatTaming.Entity {
 
         public static Terrain OpenDoor(Coord pos) {
             return new Terrain("Open door", '/', pos, foreground: Color.White, background: Color.Sienna);
+        }
+
+        public static Terrain NullTile(Coord pos) {
+            return new Terrain("", 0, pos, isWalkable: false, isVisible: false);
+        }
+
+        public static Terrain DownStairs(Coord pos) {
+            return new Terrain("Stairs down", '>', pos, foreground: Color.Yellow);
+        }
+
+        public static Terrain UpStairs(Coord pos) {
+            return new Terrain("Stairs up", '<', pos, foreground: Color.Yellow);
         }
     }
 }

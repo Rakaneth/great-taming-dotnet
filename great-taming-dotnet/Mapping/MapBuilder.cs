@@ -54,5 +54,51 @@ namespace GreatTaming.Mapping
             context.RegisterMap(id, fullMap);
             return fullMap;
         }
+
+        public static Map FromFile(string fileName, string id, Color wallColor, Color floorColor, GameContext context) {
+            string[] lines = System.IO.File.ReadAllLines(fileName);
+            int w = lines[0].Length;
+            int h = lines.Length;
+            var newMap = new ArrayMap<Terrain>(w, h);
+
+            for (int y = 0; y < lines.Length; y++) {
+                var line = lines[y];
+                if (line.Length != w) {
+                    throw new ArgumentException($"Error reading row {y + 1} of map file. Make sure all rows are the same length. Pad rows with 'x' to represent null tiles and avoid empty rows.");
+                }
+                for (int x = 0; x < lines[0].Length; x++) {
+                    var c = lines[y][x];
+                    switch (c) {
+                        case '#':
+                            newMap[x, y] = Terrain.Wall((x, y), wallColor);
+                            break;
+                        case '.':
+                            newMap[x, y] = Terrain.Floor((x, y), floorColor);
+                            break;
+                        case '+':
+                            newMap[x, y] = Terrain.ClosedDoor((x, y));
+                            break;
+                        case '/':
+                            newMap[x, y] = Terrain.OpenDoor((x, y));
+                            break;
+                        case 'x':
+                            newMap[x, y] = Terrain.NullTile((x, y));
+                            break;
+                        case '>':
+                            newMap[x, y] = Terrain.DownStairs((x, y));
+                            break;
+                        case '<':
+                            newMap[x, y] = Terrain.UpStairs((x, y));
+                            break;
+                        default:
+                            newMap[x, y] = Terrain.NullTile((x, y));
+                            break;
+                    }
+                }
+            }
+            var fullMap = Map.CreateMap(newMap, 4, Distance.CHEBYSHEV);
+            context.RegisterMap(id, fullMap);
+            return fullMap;
+        }
     }
 }

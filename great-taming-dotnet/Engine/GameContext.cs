@@ -9,6 +9,7 @@ using Troschuetz.Random.Generators;
 using GoRogue.MapViews;
 using GreatTaming.Entity;
 using GreatTaming.Mapping;
+using Microsoft.Xna.Framework;
 
 namespace GreatTaming.Engine
 {
@@ -65,10 +66,11 @@ namespace GreatTaming.Engine
         {
             var ctx = new GameContext(seed);
             var m = MapBuilder.Build(85, 85, "mines", ctx, MapType.DUNGEON);
+            var m2 = MapBuilder.FromFile("testfixed.txt", "text", Color.DarkGray, Color.Gray, ctx);
             var randPos = m.Terrain.RandomPosition((c, t) => t.IsWalkable,  ctx.RNG);
             ctx.Player = Mobile.TestPlayer(randPos);
-            ctx.SetCurMap("mines");
-            ctx.changeMap(ctx.Player, "mines");
+            ctx.SetCurMap("text");
+            ctx.changeMap(ctx.Player, "text");
             return ctx;
         }
     }
