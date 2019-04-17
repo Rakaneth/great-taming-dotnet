@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
+using GoRogue;
 using GreatTaming.Engine;
 using GreatTaming.Entity;
-using SadConsole;
-using SadConsole.Entities;
-using Console = SadConsole.Console;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using GoRogue.GameFramework;
+using SadConsole;
+using Console = SadConsole.Console;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
-using GoRogue;
 
 namespace GreatTaming.UI {
     class MainScreen : UI {
@@ -23,13 +17,13 @@ namespace GreatTaming.UI {
         private Console msgCons = new Console(30, 10) {
             Position = new Point(0, 30)
         };
-        private Console skillCons = new ControlsConsole(30, 10) {
+        private ControlsConsole skillCons = new ControlsConsole(30, 10) {
             Position = new Point(30, 30)
         };
         private Console infoCons = new Console(40, 10) {
             Position = new Point(60, 30)
         };
-        private Console statCons = new Console(40, 30) {
+        private ControlsConsole statCons = new ControlsConsole(40, 30) {
             Position = new Point(60, 0)
         };
 
@@ -37,10 +31,13 @@ namespace GreatTaming.UI {
             this.context = context;
             loadMap();
             CenterOnObject(context.Player);
+            var statDisplay = new PriStatsDisplay(new Point(1, 1));
+            context.Player.GetComponent<ObPrimaryStats>().Subscribe(statDisplay);
+            statCons.Add(statDisplay);
         }
         public override ICommand Handle() {
             
-            Direction d;
+            Direction d = Direction.NONE;
             var curKey = SadConsole.Global.KeyboardState.KeysPressed.FirstOrDefault();
 
             switch (curKey.Key) {
@@ -68,8 +65,8 @@ namespace GreatTaming.UI {
                 case Keys.NumPad7:
                     d = Direction.UP_LEFT;
                     break;
-                default:
-                    d = Direction.NONE;
+                case Keys.S:
+                    context.Player.GetComponent<ObPrimaryStats>().Str++;
                     break;
             }
             context.Player.Position = context.Player.Position.Translate(d.DeltaX, d.DeltaY);
