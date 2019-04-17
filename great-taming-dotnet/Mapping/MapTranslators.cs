@@ -20,7 +20,7 @@ namespace GreatTaming.Mapping
         }
 
         protected override bool TranslateGet(Terrain value) {
-            return !value.Name.Contains("wall");
+            return value.IsWalkable;
         }
 
         protected override Terrain TranslateSet(Coord pos, bool value) {

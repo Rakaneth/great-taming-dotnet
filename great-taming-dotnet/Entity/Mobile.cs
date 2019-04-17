@@ -42,7 +42,7 @@ namespace GreatTaming.Entity {
         }
 
         public static Mobile TestPlayer(Coord pos) {
-            return new Mobile("Player", "A test subject", '@', layer: 4);
+            return new Mobile("Player", "A test subject", '@', pos: pos, layer: 4);
         }
     }
 }
