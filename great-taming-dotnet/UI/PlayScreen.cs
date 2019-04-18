@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Input;
 using SadConsole;
 using Console = SadConsole.Console;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
+using GreatTaming.Mapping;
 
 namespace GreatTaming.UI {
     class MainScreen : UI {
@@ -30,6 +31,7 @@ namespace GreatTaming.UI {
         public MainScreen(GameContext context) : base("main") {
             this.context = context;
             loadMap();
+            loadEntities();
             CenterOnObject(context.Player);
             var statDisplay = new PriStatsDisplay(new Point(1, 1));
             context.Player.GetComponent<ObPrimaryStats>().Subscribe(statDisplay);
@@ -70,6 +72,8 @@ namespace GreatTaming.UI {
                     break;
             }
             context.Player.Position = context.Player.Position.Translate(d.DeltaX, d.DeltaY);
+            context.CurMap.CalculateFOV(context.Player.Position, 6);
+            loadMap();
             CenterOnObject(context.Player);
             return new UICommand();
         }
@@ -80,15 +84,23 @@ namespace GreatTaming.UI {
 
 
         private void loadMap() {
+            var m = context.CurMap;     
+            mapCons.Clear();
+            foreach (var ePos in m.GetExplored()) {
+                var eBG = (m.Terrain[ePos] as Terrain).Name == "Wall" ? Swatch.ExploredWall : Swatch.ExploredFloor;
+                mapCons.SetCellAppearance(ePos.X, ePos.Y, new Cell(Color.Transparent, eBG));
+            }
+            foreach (var pos in m.FOV.CurrentFOV) {
+                var t = m.Terrain[pos] as Terrain;
+                mapCons.SetCellAppearance(pos.X, pos.Y, t.DrawCell);
+            }
+
+        }
+
+
+        private void loadEntities() {
             var m = context.CurMap;
             mapCons.Children.Clear();
-            mapCons.Clear();
-            for (int x = 0; x < m.Width; x++) {
-                for (int y = 0; y < m.Height; y++) {
-                    var t = m.Terrain[x, y] as Terrain;
-                    mapCons.SetCellAppearance(x, y, t.DrawCell);
-                }
-            }                                               
             foreach (var thing in m.Entities.Items.OfType<Mobile>()) {
                 mapCons.Children.Add(thing.DrawEntity);
             }

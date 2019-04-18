@@ -7,6 +7,7 @@ using GoRogue.MapViews;
 using GreatTaming.Engine;
 using GreatTaming.Entity;
 using Microsoft.Xna.Framework;
+using GreatTaming.UI;
 
 namespace GreatTaming.Mapping {
     public enum MapType {
@@ -17,7 +18,7 @@ namespace GreatTaming.Mapping {
     public static class MapBuilder {
         public static Map Build(int width, int height, string id, GameContext context, MapType typ) {
             var baseMap = new ArrayMap<Terrain>(width, height);
-            var trans = new TerrainTranslator(baseMap, Color.Gray, Color.LightGray);
+            var trans = new TerrainTranslator(baseMap, Swatch.StoneWall, Swatch.StoneFloor);
 
             List<Coord> doors = new List<Coord>();
             switch (typ) {

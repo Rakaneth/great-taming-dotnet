@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GoRogue;
+using GreatTaming.UI;
 using Microsoft.Xna.Framework;
 using GoRogue.GameFramework;
 using SadConsole;
@@ -35,11 +36,11 @@ namespace GreatTaming.Entity {
         }
 
         public static Terrain ClosedDoor(Coord pos) {
-            return new Terrain("Closed door", '+', pos, foreground: Color.White, background: Color.Sienna);
+            return new Terrain("Closed door", '+', pos, foreground: Color.White, background: Swatch.Door, isWalkable: false, isVisible: false);
         }
 
         public static Terrain OpenDoor(Coord pos) {
-            return new Terrain("Open door", '/', pos, foreground: Color.White, background: Color.Sienna);
+            return new Terrain("Open door", '/', pos, foreground: Color.White, background: Swatch.Door);
         }
 
         public static Terrain NullTile(Coord pos) {
@@ -47,11 +48,11 @@ namespace GreatTaming.Entity {
         }
 
         public static Terrain DownStairs(Coord pos) {
-            return new Terrain("Stairs down", '>', pos, foreground: Color.Yellow);
+            return new Terrain("Stairs down", '>', pos, foreground: Swatch.Stairs);
         }
 
         public static Terrain UpStairs(Coord pos) {
-            return new Terrain("Stairs up", '<', pos, foreground: Color.Yellow);
+            return new Terrain("Stairs up", '<', pos, foreground: Swatch.Stairs);
         }
     }
 }
