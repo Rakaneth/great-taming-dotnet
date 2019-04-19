@@ -94,15 +94,27 @@ namespace GreatTaming.UI {
                 var t = m.Terrain[pos] as Terrain;
                 mapCons.SetCellAppearance(pos.X, pos.Y, t.DrawCell);
             }
-
+            foreach (var nPos in m.FOV.NewlyUnseen) {
+                foreach (var vChild in Children.OfType<SadConsole.Entities.Entity>().Where(e => e.Position == nPos)) {
+                    vChild.IsVisible = false;
+                }
+            }
+            foreach (var sPos in m.FOV.NewlySeen) {
+                foreach (var hChild in Children.OfType<SadConsole.Entities.Entity>().Where(e => e.Position == sPos)) {
+                    hChild.IsVisible = true;
+                }
+            }
         }
 
 
         private void loadEntities() {
             var m = context.CurMap;
             mapCons.Children.Clear();
-            foreach (var thing in m.Entities.Items.OfType<Mobile>()) {
+            foreach (var thing in m.Entities.Items.OfType<DrawableObject>()) {
                 mapCons.Children.Add(thing.DrawEntity);
+                if (!m.FOV.BooleanFOV[thing.DrawEntity.Position]) {
+                    thing.DrawEntity.IsVisible = false;
+                }
             }
         }
 

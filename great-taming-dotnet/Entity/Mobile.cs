@@ -11,20 +11,10 @@ using SadConsole.Components;
 
 namespace GreatTaming.Entity {
 
-    public class Mobile : GameObject {
-        public string Name { get; }
-        public string Desc { get; }
+    public class Mobile : DrawableObject {
         public bool IsPlayer { get; private set; }
-        public SadConsole.Entities.Entity DrawEntity { get; private set; }
         private Mobile(string name, string desc, int glyph, Coord? pos = null, Color? foreground = null, Color? background = null, int layer = 3)
-            : base(pos ?? (0, 0), layer, null, isWalkable: true, isTransparent: true) {
-            var fg = foreground ?? Color.White;
-            var bg = background ?? Color.Transparent;
-            DrawEntity = new SadConsole.Entities.Entity(fg, bg, glyph);
-            DrawEntity.Position = pos ?? (0, 0);
-            DrawEntity.Components.Add(new EntityViewSyncComponent());
-            Name = name;
-            Desc = desc;
+            : base(name, desc, glyph, pos, foreground, background, false, true, true, 3)  {
             Moved += Mobile_Moved;
             IsPlayer = false;
         }

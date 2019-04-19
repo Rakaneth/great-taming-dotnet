@@ -39,7 +39,7 @@ namespace GreatTaming.Mapping {
 
             var fullMap = Map.CreateMap(baseMap, 4, Distance.CHEBYSHEV);
             foreach (var newDoorSpot in doors) {
-                fullMap.SetTerrain(Terrain.ClosedDoor(newDoorSpot));
+                fullMap.AddEntity(new Door(newDoorSpot, false));
             }
             context.RegisterMap(id, fullMap);
             return fullMap;
@@ -50,6 +50,8 @@ namespace GreatTaming.Mapping {
             int w = lines[0].Length;
             int h = lines.Length;
             var newMap = new ArrayMap<Terrain>(w, h);
+            var closeDoors = new List<Coord>();
+            var openDoors = new List<Coord>();
 
             for (int y = 0; y < lines.Length; y++) {
                 var line = lines[y];
@@ -66,10 +68,10 @@ namespace GreatTaming.Mapping {
                             newMap[x, y] = Terrain.Floor((x, y), floorColor);
                             break;
                         case '+':
-                            newMap[x, y] = Terrain.ClosedDoor((x, y));
+                            closeDoors.Add((x, y));
                             break;
                         case '/':
-                            newMap[x, y] = Terrain.OpenDoor((x, y));
+                            openDoors.Add((x, y));
                             break;
                         case 'x':
                             newMap[x, y] = Terrain.NullTile((x, y));
@@ -87,6 +89,12 @@ namespace GreatTaming.Mapping {
                 }
             }
             var fullMap = Map.CreateMap(newMap, 4, Distance.CHEBYSHEV);
+            foreach (var cd in closeDoors) {
+                fullMap.AddEntity(new Door(cd, false));
+            }
+            foreach (var od in openDoors) {
+                fullMap.AddEntity(new Door(od, true));
+            }
             context.RegisterMap(id, fullMap);
             return fullMap;
         }

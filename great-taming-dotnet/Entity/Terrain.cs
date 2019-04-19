@@ -35,14 +35,6 @@ namespace GreatTaming.Entity {
             return new Terrain("Wall", ' ', pos, background: wallColor, isWalkable: false, isVisible: false);
         }
 
-        public static Terrain ClosedDoor(Coord pos) {
-            return new Terrain("Closed door", '+', pos, foreground: Color.White, background: Swatch.Door, isWalkable: false, isVisible: false);
-        }
-
-        public static Terrain OpenDoor(Coord pos) {
-            return new Terrain("Open door", '/', pos, foreground: Color.White, background: Swatch.Door);
-        }
-
         public static Terrain NullTile(Coord pos) {
             return new Terrain("", 0, pos, isWalkable: false, isVisible: false);
         }

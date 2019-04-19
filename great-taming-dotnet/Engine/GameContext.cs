@@ -59,6 +59,7 @@ namespace GreatTaming.Engine {
             ctx.Player = Mobile.TestPlayer(randPos);
             ctx.SetCurMap("mines");
             ctx.changeMap(ctx.Player, "mines");
+            ctx.CurMap.CalculateFOV(randPos, 6);
             return ctx;
         }
     }
