@@ -15,7 +15,7 @@ namespace GreatTaming.Engine {
     public class GameContext {
         private Dictionary<string, Map> maps = new Dictionary<string, Map>();
         public string CurMapID { get; private set; }
-        public Map CurMap => maps[CurMapID];
+        public Map CurMap { get { return maps[CurMapID]; } }
         public IGenerator RNG { get; }
         public Mobile Player { get; private set; }
 

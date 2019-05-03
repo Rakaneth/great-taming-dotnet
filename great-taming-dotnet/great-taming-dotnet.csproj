@@ -83,6 +83,7 @@
     <Compile Include="Mapping\MapTranslators.cs" />
     <Compile Include="UI\BoundLabels.cs" />
     <Compile Include="UI\ConsoleExtensions.cs" />
+    <Compile Include="UI\MapConsoleLogic.cs" />
     <Compile Include="UI\PlayScreen.cs" />
     <Compile Include="UI\Swatch.cs" />
     <Compile Include="UI\TitleScreen.cs" />

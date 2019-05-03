@@ -30,8 +30,9 @@ namespace GreatTaming.UI {
 
         public MainScreen(GameContext context) : base("main") {
             this.context = context;
-            loadMap();
+            //loadMap();
             loadEntities();
+            mapCons.Components.Add(new MapConsoleLogic(this.context));
             CenterOnObject(context.Player);
             var statDisplay = new PriStatsDisplay(new Point(1, 1));
             context.Player.GetComponent<ObPrimaryStats>().Subscribe(statDisplay);
@@ -73,7 +74,7 @@ namespace GreatTaming.UI {
             }
             context.Player.Position = context.Player.Position.Translate(d.DeltaX, d.DeltaY);
             context.CurMap.CalculateFOV(context.Player.Position, 6);
-            loadMap();
+            //loadMap();
             CenterOnObject(context.Player);
             return new UICommand();
         }
@@ -82,7 +83,7 @@ namespace GreatTaming.UI {
             mapCons.CenterViewPortOnPoint(m.Position);
         }
 
-
+        /*
         private void loadMap() {
             var m = context.CurMap;     
             mapCons.Clear();
@@ -90,31 +91,15 @@ namespace GreatTaming.UI {
                 var eBG = (m.Terrain[ePos] as Terrain).Name == "Wall" ? Swatch.ExploredWall : Swatch.ExploredFloor;
                 mapCons.SetCellAppearance(ePos.X, ePos.Y, new Cell(Color.Transparent, eBG));
             }
-            foreach (var pos in m.FOV.CurrentFOV) {
-                var t = m.Terrain[pos] as Terrain;
-                mapCons.SetCellAppearance(pos.X, pos.Y, t.DrawCell);
-            }
-            foreach (var nPos in m.FOV.NewlyUnseen) {
-                foreach (var vChild in Children.OfType<SadConsole.Entities.Entity>().Where(e => e.Position == nPos)) {
-                    vChild.IsVisible = false;
-                }
-            }
-            foreach (var sPos in m.FOV.NewlySeen) {
-                foreach (var hChild in Children.OfType<SadConsole.Entities.Entity>().Where(e => e.Position == sPos)) {
-                    hChild.IsVisible = true;
-                }
-            }
-        }
+        }*/
 
 
         private void loadEntities() {
             var m = context.CurMap;
             mapCons.Children.Clear();
             foreach (var thing in m.Entities.Items.OfType<DrawableObject>()) {
+                thing.DrawEntity.IsVisible = false;
                 mapCons.Children.Add(thing.DrawEntity);
-                if (!m.FOV.BooleanFOV[thing.DrawEntity.Position]) {
-                    thing.DrawEntity.IsVisible = false;
-                }
             }
         }
 

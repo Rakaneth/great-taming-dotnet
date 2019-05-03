@@ -17,7 +17,7 @@ namespace GreatTaming.Entity {
         private Color bg;
         private int glyph;
         public string Name { get; }
-        public Cell DrawCell => new Cell(fg, bg, glyph);
+        public Cell DrawCell; 
 
         private Terrain(string name, int glyph, Coord pos, Color? foreground = null, Color? background = null, bool isWalkable = true, bool isVisible = true)
             : base(pos, 0, null, true, isWalkable, isVisible) {
@@ -25,6 +25,7 @@ namespace GreatTaming.Entity {
             fg = foreground ?? Color.Transparent;
             bg = background ?? Color.Transparent;
             this.glyph = glyph;
+            DrawCell = new Cell(fg, bg, glyph);
         }
 
         public static Terrain Floor(Coord pos, Color floorColor) {
